@@ -32,12 +32,7 @@ def get_all_keys(input_pdf_path):
                 key = annotation[ANNOT_FIELD_KEY][1:-1]
                 all_keys.append(key)
 
-                # fill_with = ...
-                # annotation.update(
-                #     pdfrw.PdfDict(V='{}'.format(fill_with))
-                # )
 
-    # pdfrw.PdfWriter().write(output_pdf_path, template_pdf)
     return all_keys
 
 def fill_pdf(input_pdf_path, output_pdf_path, lookup_fn):
@@ -108,7 +103,10 @@ with open('/usr/share/dict/american-english-small', 'r') as f:
     wordlist = [x.strip() for x in f.readlines()]
     
 def random_word():
-    return wordlist[random.randint(0, len(wordlist)-1)]
+    ans = wordlist[random.randint(0, len(wordlist)-1)]
+    if "'" in ans:
+        return random_word()
+    return ans
 
 
 
