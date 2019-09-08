@@ -6,13 +6,11 @@ import random
 import toml
 
 
-INVOICE_OUTPUT_PATH = 'invoice.pdf'
+
 
 
 ANNOT_KEY = '/Annots'
 ANNOT_FIELD_KEY = '/T'
-ANNOT_VAL_KEY = '/V'
-ANNOT_RECT_KEY = '/Rect'
 SUBTYPE_KEY = '/Subtype'
 WIDGET_SUBTYPE_KEY = '/Widget'
 
@@ -52,6 +50,8 @@ def fill_pdf(input_pdf_path, output_pdf_path, lookup_fn):
                 annotation.update(
                     pdfrw.PdfDict(V='{}'.format(fill_with))
                 )
+
+    template_pdf.Root.AcroForm.update(pdfrw.PdfDict(NeedAppearances=pdfrw.PdfObject('true')))
 
     pdfrw.PdfWriter().write(output_pdf_path, template_pdf)
 
