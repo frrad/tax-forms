@@ -169,6 +169,7 @@ if __name__ == '__main__':
 
     forms = glob.glob(source_dir+'*.pdf')
     for form in forms:
+        print("\n")
         filename = form.split('/')[-1]
         filename_prefix = ''.join(filename.split('.')[:-1])
         print(filename, filename_prefix)
