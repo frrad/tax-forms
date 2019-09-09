@@ -88,7 +88,7 @@ def complete_template(template_path, source_path):
     fields = get_all_keys(source_path)
     for field in fields:
         if field not in temp_kv.keys():
-            temp_kv[field] = random_word()
+            temp_kv[field] = random_word() + "-unknown"
 
     write_template(template_path, temp_kv)
 
@@ -103,6 +103,8 @@ def random_word():
     if "'" in ans:
         return random_word()
     if len(ans) <= 2:
+        return random_word()
+    if len(ans) >= 8:
         return random_word()
     if ans.lower() != ans:
         return random_word()
@@ -119,15 +121,21 @@ def complete_values(template_path, values):
     temp_kv = parse_template(template_path)
     value_kv = parse_template(values, "values")
 
-    for k in temp_kv.keys():
-        if k not in value_kv:
-            value_kv[k] =           ''
-            print('adding new field', k)
+    for k in temp_kv:
+        v = temp_kv[k]
+        if v not in value_kv:
+            value_kv[v] =           ''
+            print('adding new field', v)
 
-    for k in value_kv.keys():
-        if k not in temp_kv:
-            del (value_kv, k)
+    to_kill = []
+
+    for k in value_kv:
+        if k not in temp_kv.values():
             print('KILLING UNKNOWN FIELD', k ,value_kv[k])
+            to_kill.append(k)
+
+    for k in to_kill:
+        del value_kv[k]
 
     write_template(values, value_kv, 'values')
 
