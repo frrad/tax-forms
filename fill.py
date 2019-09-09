@@ -140,10 +140,26 @@ def complete_values(template_path, values):
     write_template(values, value_kv, 'values')
 
 
+def fill_values(pdf_in, template_path, values, pdf_out_filled):
+    temp_kv = parse_template(template_path)
+    value_kv =  parse_template(values, 'values')
+    fill_fn = lambda x : None if x not in temp_kv or temp_kv[x] not in value_kv else value_kv[temp_kv[x]]
+    fill_pdf(pdf_in, pdf_out_filled, fill_fn)
+    
+
+
 def process_form(template_path, values, pdf_in, pdf_out_demo, pdf_out_filled):
+    print('checking template against pdf')
     complete_template(template_path, pdf_in)
+
+    print('regenerating template demonstration pdf')
     demo_keys(template_path, pdf_in, pdf_out_demo)
+
+    print('checking values against template')
     complete_values(template_path, values)
+    
+    print('filling pdf with values')
+    fill_values(pdf_in, template_path, values, pdf_out_filled)
 
 
 if __name__ == '__main__':
