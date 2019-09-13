@@ -163,9 +163,9 @@ def process_form(template_path, values, pdf_in, pdf_out_demo, pdf_out_filled):
 
 
 if __name__ == '__main__':
-    source_dir = '2017-irs/'
-    value_dir = '../taxes/2017-irs/'
-    out_dir = '../taxes/2017-irs/output/'
+    source_dir = '2017-ca/'
+    value_dir = '../taxes/2017-ca/'
+    out_dir = '../taxes/2017-ca/output/'
 
     forms = glob.glob(source_dir+'*.pdf')
     for form in forms:
